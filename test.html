@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishnendu Prasanth | AI Engineer & Full-Stack Developer</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <!-- LiveKit Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
+
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-color: #030303;
+            --primary: #D4AF37;
+            /* Gold */
+            --glass: rgba(20, 20, 20, 0.6);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- 1. GOD RAYS (BACKGROUND) --- */
+        .god-rays-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .god-ray-light {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(0, 0, 0, 0) 60%);
+            mix-blend-mode: screen;
+            filter: blur(60px);
+        }
+
+        .god-ray-beam {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+            width: 800px;
+            height: 1000px;
+            background: conic-gradient(from 180deg at 50% 0%, transparent 0deg, rgba(212, 175, 55, 0.05) 15deg, transparent 30deg, transparent 330deg, rgba(212, 175, 55, 0.05) 345deg, transparent 360deg);
+            filter: blur(20px);
+            z-index: 1;
+            animation: rotateBeam 20s linear infinite;
+        }
+
+        @keyframes rotateBeam {
+            from {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            to {
+                transform: translateX(-50%) rotate(360deg);
+            }
+        }
+
+        @keyframes logoScroll {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-logo-scroll {
+            animation: logoScroll 22s linear infinite;
+        }
+
+        .animate-logo-scroll-small {
+            animation: logoScroll 32s linear infinite;
+        }
+
+
+        /* --- AMBIENT MOUSE FOLLOW --- */
+        #ambient-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: overlay;
+        }
+
+        /* --- TEXT & TYPEWRITER --- */
+        .text-gold-gradient {
+            background: linear-gradient(180deg, #FFF8DC 0%, #D4AF37 50%, #8B6914 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .typewriter::after {
+            content: '|';
+            color: #D4AF37;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                opacity: 0
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        /* --- NAVIGATION --- */
+        #side-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(12px);
+            padding: 1.5rem 1rem;
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(212, 175, 55, 0.1);
+        }
+
+        #side-nav.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .nav-link {
+            color: #666;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover {
+            color: #D4AF37;
+            transform: scale(1.3);
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+        }
+
+        .nav-link::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 250%;
+            background: #111;
+            color: #D4AF37;
+            border: 1px solid #333;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.2s;
+            white-space: nowrap;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover::before {
+            opacity: 1;
+            right: 200%;
+        }
+
+        /* --- CARDS & SPOTLIGHT EFFECT --- */
+        .project-card,
+        .skill-card {
+            background: #080808;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card::after,
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: conic-gradient(from var(--angle) at 50% 50%, transparent 0%, #D4AF37 5%, #D4AF37 10%, transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .project-card:hover::after,
+        .skill-card:hover::after {
+            opacity: 0.5;
+        }
+
+        .project-card:hover,
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .project-card::before,
+        .skill-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(212, 175, 55, 0.15), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .project-card:hover::before,
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-content {
+            background: #050505;
+            position: relative;
+            z-index: 10;
+            margin: 1px;
+            height: calc(100% - 2px);
+            width: calc(100% - 2px);
+            border-radius: inherit;
+        }
+
+        /* --- TIMELINE --- */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #D4AF37, transparent);
+            transform: translateX(-50%);
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            width: 50%;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: #000;
+            border: 1px solid #D4AF37;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            z-index: 10;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -5px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -5px;
+        }
+
+        /* --- UTILS --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s ease-out;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gold-btn {
+            background: rgba(212, 175, 55, 0.05);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            transition: 0.3s;
+        }
+
+        .gold-btn:hover {
+            background: #D4AF37;
+            color: #000;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* ============================= */
+        /* KAI — PILL LAUNCHER           */
+        /* ============================= */
+        #agent-launcher {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Label that slides in on hover */
+        #launcher-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(212, 175, 55, 0.7);
+            opacity: 0;
+            transform: translateX(8px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        #agent-launcher:hover #launcher-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* The pill button itself */
+        #launcher-pill {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: #080808;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 0 rgba(212, 175, 55, 0);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, border-radius 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #launcher-pill::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 100%, rgba(212, 175, 55, 0.08), transparent 70%);
+            transition: opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        #agent-launcher:hover #launcher-pill::before {
+            opacity: 1;
+        }
+
+        #agent-launcher:hover #launcher-pill {
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.12);
+        }
+
+        /* Active (open) state */
+        #agent-launcher.active #launcher-pill {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.6);
+            border-radius: 12px;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.06), 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        /* Waveform bars */
+        .kai-bar {
+            width: 3px;
+            border-radius: 99px;
+            background: rgba(212, 175, 55, 0.4);
+            animation: kaiWave 1.4s ease-in-out infinite;
+            transition: background 0.3s ease;
+        }
+
+        #agent-launcher:hover .kai-bar,
+        #agent-launcher.active .kai-bar {
+            background: #D4AF37;
+        }
+
+        .kai-bar:nth-child(1) {
+            height: 10px;
+            animation-delay: 0s;
+        }
+
+        .kai-bar:nth-child(2) {
+            height: 18px;
+            animation-delay: 0.15s;
+        }
+
+        .kai-bar:nth-child(3) {
+            height: 24px;
+            animation-delay: 0.3s;
+        }
+
+        .kai-bar:nth-child(4) {
+            height: 16px;
+            animation-delay: 0.45s;
+        }
+
+        .kai-bar:nth-child(5) {
+            height: 10px;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes kaiWave {
+
+            0%,
+            100% {
+                transform: scaleY(0.4);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        /* Listening state: bars go red and faster */
+        #agent-launcher.listening .kai-bar {
+            background: #ff4444;
+            animation-duration: 0.5s;
+        }
+
+        /* ============================= */
+        /* AGENT DIALOG — UPGRADED       */
+        /* ============================= */
+        #agent-dialog {
+            position: fixed;
+            bottom: 92px;
+            right: 28px;
+            width: 360px;
+            height: 480px;
+            background: rgba(7, 7, 7, 0.97);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            border-radius: 20px;
+            padding: 0;
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(16px) scale(0.97);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #agent-dialog.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Header gradient bar */
+        .agent-header {
+            padding: 14px 16px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(0, 0, 0, 0) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .agent-header-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #D4AF37;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+            animation: statusPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .agent-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            font-size: 0.875rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(212, 175, 55, 0.1) transparent;
+        }
+
+        .agent-body::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .agent-body::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.15);
+            border-radius: 4px;
+        }
+
+        .agent-input-area {
+            padding: 12px 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Typing Animation */
+        .typing-dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background-color: #D4AF37;
+            border-radius: 50%;
+            animation: type 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes type {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* --- PROJECT MODAL & ELI5 --- */
+        .project-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-modal.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            width: min(90%, 800px);
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .project-modal.open .modal-content {
+            transform: scale(1);
+        }
+
+        /* ELI5 Box */
+        .eli5-box {
+            background: #111;
+            border-left: 3px solid #D4AF37;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 0 12px 12px 0;
+            display: none;
+        }
+
+        .eli5-box.visible {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Image containment */
+        .project-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+        }
+
+        .project-card:hover .project-image-container img {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            #side-nav {
+                bottom: 2rem;
+                top: auto;
+                right: 50%;
+                transform: translateX(50%);
+                flex-direction: row;
+                border-radius: 3rem;
+                width: max-content;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                text-align: left !important;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-dot {
+                left: 15px !important;
+            }
+
+            #agent-dialog {
+                width: 90%;
+                right: 5%;
+                bottom: 100px;
+            }
+        }
+
+        /* ========================= */
+        /* SKILLS PAGE — REDEFINED   */
+        /* ========================= */
+
+        /* Skill Category Card */
+        .skill-card {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(15, 15, 15, 0.7);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.07);
+        }
+
+        /* Card glow on hover */
+        .card-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .skill-card:hover .card-glow {
+            opacity: 1;
+        }
+
+        /* Category label */
+        .skill-category-label {
+            font-size: 9px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            padding: 0.35rem 0.85rem;
+            border-radius: 99px;
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            color: #D4AF37;
+            display: inline-block;
+        }
+
+        /* Tool tags inside cards */
+        .tool-tag {
+            font-size: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .skill-card:hover .tool-tag {
+            background: rgba(212, 175, 55, 0.06);
+            border-color: rgba(212, 175, 55, 0.15);
+            color: #d1d5db;
+        }
+
+        /* Proficiency bar */
+        .prof-bar-bg {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 99px;
+            overflow: hidden;
+            height: 3px;
+        }
+
+        .prof-bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, #8B6914, #D4AF37);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+            transition: width 1.2s ease-out;
+        }
+
+        /* Stat bubble */
+        .stat-bubble {
+            font-family: 'Space Grotesk', sans-serif;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover .stat-bubble {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+
+        /* Skills grid layout */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .skills-grid .sk-wide {
+            grid-column: span 2;
+        }
+
+        .skills-grid .sk-full {
+            grid-column: span 3;
+        }
+
+        @media (max-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .skills-grid .sk-wide {
+                grid-column: span 2;
+            }
+
+            .skills-grid .sk-full {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid .sk-wide,
+            .skills-grid .sk-full {
+                grid-column: span 1;
+            }
+        }
+
+        /* ========================= */
+        /* LOGO BASE STYLE          */
+        /* ========================= */
+        .logo {
+            color: #d1d5db;
+            transition: color 0.25s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            color: #D4AF37;
+        }
+
+        /* ========================= */
+        /* INFINITE CAROUSEL        */
+        /* ========================= */
+        @keyframes slideLeft {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes slideRight {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .logo-track {
+            width: max-content;
+            animation: slideLeft linear infinite;
+        }
+
+        .logo-track.reverse {
+            animation-name: slideRight;
+        }
+
+        .logo-track.major {
+            animation-duration: 30s;
+        }
+
+        .logo-track.small {
+            animation-duration: 40s;
+        }
+
+        /* Hover = pause */
+        .carousel-row:hover .logo-track {
+            animation-play-state: paused;
+        }
+
+        /* Fade edges on carousel rows */
+        .carousel-row {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-row::before,
+        .carousel-row::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .carousel-row::before {
+            left: 0;
+            background: linear-gradient(to right, #030303, transparent);
+        }
+
+        .carousel-row::after {
+            right: 0;
+            background: linear-gradient(to left, #030303, transparent);
+        }
+
+        /* Logo item inside carousel */
+        .carousel-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: #555;
+            transition: color 0.3s ease;
+            cursor: default;
+        }
+
+        .carousel-item:hover {
+            color: #D4AF37;
+        }
+
+        .carousel-item span {
+            font-size: 9px;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="god-rays-container">
+        <div class="god-ray-light"></div>
+        <div class="god-ray-beam"></div>
+    </div>
+    <div id="ambient-glow"></div>
+
+    <nav id="side-nav">
+        <a href="#hero" class="nav-link" data-label="Home"><i class="fas fa-home"></i></a>
+        <a href="#introduction" class="nav-link" data-label="About"><i class="fas fa-user-astronaut"></i></a>
+        <a href="#academics-experience" class="nav-link" data-label="Journey"><i class="fas fa-graduation-cap"></i></a>
+        <a href="#projects" class="nav-link" data-label="Models"><i class="fas fa-brain"></i></a>
+        <a href="#skills" class="nav-link" data-label="Skills"><i class="fas fa-microchip"></i></a>
+        <a href="#contact" class="nav-link" data-label="Contact"><i class="fas fa-paper-plane"></i></a>
+    </nav>
+
+    <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative z-10 px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-light text-gray-400 mb-2 fade-up">I Am</h1>
+        <h2 class="text-6xl md:text-8xl font-bold mb-6 fade-up tracking-tighter leading-tight">
+            <span class="text-gold-gradient" id="typewriter"></span>
+        </h2>
+        <p class="text-[#FFFFFF] tracking-[0.5em] uppercase text-xs mb-6 fade-up font-bold opacity-80">An AI/ML Engineer
+            Modelling the future</p>
+        <div class="flex gap-6 fade-up items-center">
+            <a href="#projects" class="gold-btn px-8 py-3 rounded-full font-medium text-sm tracking-wide">
+                View Top Models <i class="fas fa-microchip ml-2"></i>
+            </a>
+            <a href="#contact" class="text-gray-400 hover:text-[#D4AF37] transition text-sm">
+                Get In Touch
+            </a>
+        </div>
+    </section>
+
+    <section id="introduction" class="py-24 px-6 md:px-20 max-w-6xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="fade-up text-left">
+                <p class="skill-category-label mb-3">About Me</p>
+                <h2 class="text-3xl font-bold mb-8 text-white"><span class="text-[#D4AF37]">/</span> About Krishnendu
+                    Prasanth</h2>
+                <p class="text-gray-400 mb-6 leading-relaxed text-lg">
+                    They call me <strong class="text-white">Krish</strong>. I work at the intersection of engineering
+                    and creativity. My focus is on designing, training and deploying machine learning models — LLMs,
+                    vision systems, and data-driven decision tools — with a strong emphasis on reliability and scalable
+                    architecture.
+                </p>
+                <p class="text-gray-400 leading-relaxed text-lg">
+                    Outside the codebase, I regularly take on roles that involve speaking, presenting or leading teams.
+                    I enjoy breaking down technical topics for non-technical audiences, running discussions, and driving
+                    clarity when multiple ideas collide.
+                </p>
+                <a href="#academics-experience"
+                    class="inline-block mt-8 text-[#D4AF37] hover:text-white transition duration-300 font-bold text-sm uppercase tracking-widest">
+                    Explore My Journey <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            <div class="fade-up relative w-full max-w-sm mx-auto md:max-w-md md:ml-auto">
+                <div
+                    class="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] aspect-[3/4] bg-[#0a0a0a]">
+                    <img src="img\Krishnendu(3x4).jpeg" alt="Krishnendu Prasanth"
+                        class="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-gray-900/50 max-w-6xl mx-auto">
+
+    <section id="academics-experience" class="py-24 px-4 max-w-5xl mx-auto relative z-10">
+        <h2 class="text-3xl font-bold mb-20 text-center fade-up"><span class="text-[#D4AF37]">/</span> My Journey:
+            Academics & Experience</h2>
+        <div class="relative">
+            <div class="timeline-line"></div>
+            <div class="flex flex-col gap-16">
+                <div class="timeline-item fade-up">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-bold text-white font-display">AI Engineer Intern
+                    </h3>
+                    <p class="text-[#D4AF37] text-xs uppercase tracking-wider mb-3 opacity-80">Akiyam Solutions •
+                        Currently</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Designed the system architecture for a personalized
+                        AI-driven recommendation engine, leveraging machine learning principles, data modeling, and
+                        scalable backend design. Contributed to intelligent workflow optimization while gaining hands-on
+                        experience in production-oriented AI development.</p>
+                </div>
+                <div class="timeline-item fade-up">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-bold text-white font-display">Software Developer Intern</h3>
+                    <p class="text-[#D4AF37] text-xs uppercase tracking-wider mb-3 opacity-80">PixelCodes Technologies •
+                        7 Months</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Contributed to developing and optimizing web-based
+                        applications as a Software Development Intern, assisting in feature implementation, debugging,
+                        and performance improvements. Collaborated with the development team through the full software
+                        development lifecycle while gaining practical exposure to professional coding standards and
+                        corporate workflows.</p>
+                </div>
+                <div class="timeline-item fade-up">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-bold text-white font-display">Bachelor of Computer Application (Hons) - AI
+                    </h3>
+                    <p class="text-[#D4AF37] text-xs uppercase tracking-wider mb-3 opacity-80">Nitte Institute of
+                        Professional Education • 2023 - 2027</p>
+                    <p class="text-gray-500 text-sm leading-relaxed">Specializing in Artificial Intelligence with a CGPA
+                        of 9.11, actively engaged in research and hands-on projects in machine learning and intelligent
+                        system design. Applied theoretical concepts to build real-world AI solutions, including
+                        data-driven models and recommendation systems, while continuously exploring advanced AI
+                        architectures and optimization techniques.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-gray-900/50 max-w-6xl mx-auto">
+
+    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
+        <p class="skill-category-label mb-3">Projects</p>
+        <h2 class="text-3xl font-bold mb-16 fade-up">
+            <span class="text-[#D4AF37]">/</span> Advanced AI Models
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="top-projects-container">
+
+            <!-- Project 1 -->
+            <div class="project-card fade-up p-1 group" data-project-id="1">
+                <div class="card-content p-5 flex flex-col h-full" onclick="openProjectModal(1)">
+                    <div
+                        class="rounded-lg overflow-hidden mb-6 relative border border-gray-900 bg-[#0a0a0a] h-48 flex items-center justify-center">
+                        <img src="img\Krishna.png" alt="Krishna Voice Agent"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 font-display">
+                        Krishna – Voice Agent
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 flex-grow leading-relaxed">
+                        Conversational voice assistant capable of executing tasks via real-time speech understanding.
+                    </p>
+                    <div class="flex gap-2 flex-wrap mt-auto">
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Speech
+                            AI</span>
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">NLP</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Project 2 -->
+            <div class="project-card fade-up p-1 group" data-project-id="2">
+                <div class="card-content p-5 flex flex-col h-full" onclick="openProjectModal(2)">
+                    <div
+                        class="rounded-lg overflow-hidden mb-6 relative border border-gray-900 bg-[#0a0a0a] h-48 flex items-center justify-center project-image-container">
+                        <img src="img\DynamicRAG.png" alt="Dynamic RAG"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 font-display">
+                        Dynamic RAG for PDF Documents
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 flex-grow leading-relaxed">
+                        Enables precise question answering from PDFs using dynamic retrieval pipelines.
+                    </p>
+                    <div class="flex gap-2 flex-wrap mt-auto">
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">RAG</span>
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">LLMs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card fade-up p-1 group" data-project-id="3">
+                <div class="card-content p-5 flex flex-col h-full" onclick="openProjectModal(3)">
+                    <div
+                        class="rounded-lg overflow-hidden mb-6 relative border border-gray-900 bg-[#0a0a0a] h-48 flex items-center justify-center project-image-container">
+                        <img src="img\SentinelAI.png" alt="SentinelAI"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 font-display">
+                        SentinelAI – Engineering Review Orchestrator
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 flex-grow leading-relaxed">
+                        Coordinates AI agents to automate internal code and design reviews.
+                    </p>
+                    <div class="flex gap-2 flex-wrap mt-auto">
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Agentic
+                            AI</span>
+                        <span
+                            class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Automation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="more-projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden mb-12">
+
+            <!-- Project 4 -->
+            <div class="project-card fade-up p-1 group" data-project-id="4">
+                <div class="card-content p-5 flex flex-col h-full" onclick="openProjectModal(4)">
+                    <div
+                        class="rounded-lg overflow-hidden mb-6 relative border border-gray-900 bg-[#0a0a0a] h-48 flex items-center justify-center project-image-container">
+                        <img src="img\Supply.png" alt="AI Supply Chain"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 font-display">
+                        AI Optimized Supply Chain Management System
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 flex-grow leading-relaxed">
+                        Streamlines demand forecasting, inventory planning, and logistics using ML-driven insights.
+                    </p>
+                    <div class="flex gap-2 flex-wrap mt-auto">
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Machine
+                            Learning</span>
+                        <span
+                            class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Optimization</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card fade-up p-1 group" data-project-id="5">
+                <div class="card-content p-5 flex flex-col h-full" onclick="openProjectModal(5)">
+                    <div
+                        class="rounded-lg overflow-hidden mb-6 relative border border-gray-900 bg-[#0a0a0a] h-48 flex items-center justify-center">
+                        <img src="img\Code.png" alt="AI Code Reviewer"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 font-display">
+                        AI Code Reviewer
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 flex-grow leading-relaxed">
+                        Reviews source code to detect bugs, improve quality, and enforce best practices.
+                    </p>
+                    <div class="flex gap-2 flex-wrap mt-auto">
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Static
+                            Analysis</span>
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">LLMs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card fade-up p-1 group" data-project-id="6">
+                <div class="card-content p-5 flex flex-col h-full" onclick="openProjectModal(6)">
+                    <div
+                        class="rounded-lg overflow-hidden mb-6 relative border border-gray-900 bg-[#0a0a0a] h-48 flex items-center justify-center">
+                        <img src="img\Football.png" alt="AI Football Prediction"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2 font-display">
+                        AI Football Score Prediction
+                    </h3>
+                    <p class="text-gray-500 text-sm mb-4 flex-grow leading-relaxed">
+                        Predicts football match outcomes using historical data and ML models.
+                    </p>
+                    <div class="flex gap-2 flex-wrap mt-auto">
+                        <span
+                            class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">Prediction</span>
+                        <span class="text-[10px] border border-gray-800 px-2 py-1 rounded text-[#D4AF37]">ML</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center w-full fade-up">
+            <button id="view-more-btn"
+                class="gold-btn px-10 py-3 rounded-full font-medium text-sm tracking-wide transition duration-300">
+                View More Projects <i class="fas fa-arrow-down ml-2"></i>
+            </button>
+        </div>
+    </section>
+
+
+    <section id="skills" class="py-24 px-6 max-w-7xl mx-auto relative z-10">
+
+        <!-- Section Header -->
+        <div class="mb-16 fade-up">
+            <p class="skill-category-label mb-3">Expertise</p>
+            <h2 class="text-4xl font-bold text-white font-display">
+                <span class="text-[#D4AF37]">/</span> Skills &amp; Competencies
+            </h2>
+            <p class="text-gray-500 mt-3 text-sm max-w-xl">A full-stack AI builder — from model architecture to
+                production deployment. Here's what I bring to the table.</p>
+        </div>
+
+        <!-- ── SKILLS GRID ── -->
+        <div class="skills-grid mb-20">
+
+            <!-- 1. Generative AI & LLMs (WIDE) -->
+            <div class="skill-card sk-wide fade-up group">
+                <div class="card-glow"></div>
+                <div class="p-7 h-full relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
+                                <i class="fas fa-robot text-[#D4AF37] text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="skill-category-label">Core Domain</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 font-display">Generative AI &amp; Large Language
+                            Models</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-5">Designing, fine-tuning and deploying
+                            LLM-based systems — from RAG pipelines to multi-agent orchestration. Built production-grade
+                            AI systems using GPT-4, Gemini, and open-source models.</p>
+                        <div class="grid grid-cols-2 gap-3 mb-5">
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Prompt Engineering</span><span class="text-[#D4AF37]">95%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[95%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>RAG Architecture</span><span class="text-[#D4AF37]">92%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[92%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Fine-tuning</span><span class="text-[#D4AF37]">78%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[78%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Agentic Pipelines</span><span class="text-[#D4AF37]">90%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[90%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tool-tag">LangChain</span>
+                        <span class="tool-tag">LlamaIndex</span>
+                        <span class="tool-tag">OpenAI API</span>
+                        <span class="tool-tag">Gemini</span>
+                        <span class="tool-tag">Hugging Face</span>
+                        <span class="tool-tag">Vector DBs</span>
+                        <span class="tool-tag">CrewAI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Machine Learning -->
+            <div class="skill-card fade-up group">
+                <div class="card-glow"></div>
+                <div class="p-7 h-full relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                                <i
+                                    class="fas fa-chart-line text-gray-400 text-lg group-hover:text-[#D4AF37] transition"></i>
+                            </div>
+                            <span class="skill-category-label">ML / DL</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 font-display">Machine Learning &amp; Deep Learning
+                        </h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-5">From classical ML to CNNs, RNNs and
+                            transformer architectures. Experienced in end-to-end model lifecycle management.</p>
+                        <div class="space-y-3">
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Model Training</span><span class="text-[#D4AF37]">89%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[89%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Predictive Analytics</span><span class="text-[#D4AF37]">85%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[85%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-tag">TensorFlow</span>
+                        <span class="tool-tag">PyTorch</span>
+                        <span class="tool-tag">Scikit-learn</span>
+                        <span class="tool-tag">XGBoost</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Full-Stack Development -->
+            <div class="skill-card fade-up group">
+                <div class="card-glow"></div>
+                <div class="p-7 h-full relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                                <i
+                                    class="fas fa-layer-group text-gray-400 text-lg group-hover:text-[#D4AF37] transition"></i>
+                            </div>
+                            <span class="skill-category-label">Web Dev</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 font-display">Full-Stack Development</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-5">Building scalable web applications with
+                            modern frameworks. Comfortable across the entire stack — from REST APIs to sleek frontends.
+                        </p>
+                        <div class="space-y-3">
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Backend (Python/Node)</span><span class="text-[#D4AF37]">88%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[88%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="flex justify-between text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
+                                    <span>Frontend (React)</span><span class="text-[#D4AF37]">80%</span>
+                                </div>
+                                <div class="prof-bar-bg">
+                                    <div class="prof-bar-fill w-[80%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="tool-tag">React</span>
+                        <span class="tool-tag">Next.js</span>
+                        <span class="tool-tag">FastAPI</span>
+                        <span class="tool-tag">Node.js</span>
+                        <span class="tool-tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. NLP & Speech -->
+            <div class="skill-card fade-up group">
+                <div class="card-glow"></div>
+                <div class="p-7 h-full relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                                <i
+                                    class="fas fa-microphone-alt text-gray-400 text-lg group-hover:text-[#D4AF37] transition"></i>
+                            </div>
+                            <span class="skill-category-label">NLP / Speech</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 font-display">NLP &amp; Speech AI</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-5">Worked with real-time speech-to-text,
+                            intent recognition, and conversational AI. Built a live voice assistant that integrates with
+                            web APIs.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tool-tag">Whisper</span>
+                        <span class="tool-tag">NLTK</span>
+                        <span class="tool-tag">spaCy</span>
+                        <span class="tool-tag">LiveKit</span>
+                        <span class="tool-tag">Web Speech API</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Data & Analytics -->
+            <div class="skill-card fade-up group">
+                <div class="card-glow"></div>
+                <div class="p-7 h-full relative z-10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-5">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                                <i
+                                    class="fas fa-database text-gray-400 text-lg group-hover:text-[#D4AF37] transition"></i>
+                            </div>
+                            <span class="skill-category-label">Data</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 font-display">Data Engineering &amp; Analytics</h3>
+                        <p class="text-gray-500 text-xs leading-relaxed mb-5">Structuring, cleaning, and analyzing
+                            complex datasets. Comfortable with SQL, NoSQL, and vector databases for AI-native
+                            applications.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tool-tag">Pandas</span>
+                        <span class="tool-tag">NumPy</span>
+                        <span class="tool-tag">PostgreSQL</span>
+                        <span class="tool-tag">MongoDB</span>
+                        <span class="tool-tag">Pinecone</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Stats Row (FULL WIDTH) -->
+            <div class="skill-card sk-full fade-up group">
+                <div class="card-glow"></div>
+                <div class="p-6 relative z-10">
+                    <p class="text-[10px] uppercase tracking-widest text-gray-600 mb-5 font-display">By the numbers</p>
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <div class="stat-bubble">
+                            <p class="text-2xl font-bold text-[#D4AF37] font-display">6+</p>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">AI Projects</p>
+                        </div>
+                        <div class="stat-bubble">
+                            <p class="text-2xl font-bold text-[#D4AF37] font-display">9.11</p>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">CGPA</p>
+                        </div>
+                        <div class="stat-bubble">
+                            <p class="text-2xl font-bold text-[#D4AF37] font-display">10 mo</p>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">Industry Experience</p>
+                        </div>
+                        <div class="stat-bubble">
+                            <p class="text-2xl font-bold text-[#D4AF37] font-display">10+</p>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">Tech Stack Items</p>
+                        </div>
+                        <div class="stat-bubble">
+                            <p class="text-2xl font-bold text-[#D4AF37] font-display">2</p>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">Internships</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ── INFINITE TECH CAROUSEL ── -->
+        <div class="border-t border-gray-900/40 pt-14 space-y-5 relative z-10">
+            <p class="text-[10px] uppercase tracking-widest text-gray-700 font-display mb-6">Tech Stack &amp; Tools</p>
+
+            <!-- Row 1 — Left -->
+            <div class="carousel-row">
+                <div class="logo-track major flex items-end gap-14 whitespace-nowrap">
+                    <!-- Set 1 -->
+                    <div class="carousel-item"><i class="fab fa-python text-3xl"></i><span>Python</span></div>
+                    <div class="carousel-item"><i class="fab fa-react text-3xl"></i><span>React</span></div>
+                    <div class="carousel-item"><i class="fab fa-js text-3xl"></i><span>JavaScript</span></div>
+                    <div class="carousel-item"><i class="fab fa-docker text-3xl"></i><span>Docker</span></div>
+                    <div class="carousel-item"><i class="fab fa-git-alt text-3xl"></i><span>Git</span></div>
+                    <div class="carousel-item"><i class="fab fa-aws text-3xl"></i><span>AWS</span></div>
+                    <div class="carousel-item"><i class="fab fa-node-js text-3xl"></i><span>Node.js</span></div>
+                    <div class="carousel-item"><i class="fab fa-linux text-3xl"></i><span>Linux</span></div>
+                    <div class="carousel-item"><i class="fas fa-database text-3xl"></i><span>SQL</span></div>
+                    <div class="carousel-item"><i class="fas fa-brain text-3xl"></i><span>TensorFlow</span></div>
+                    <!-- Set 2 (duplicate for seamless loop) -->
+                    <div class="carousel-item"><i class="fab fa-python text-3xl"></i><span>Python</span></div>
+                    <div class="carousel-item"><i class="fab fa-react text-3xl"></i><span>React</span></div>
+                    <div class="carousel-item"><i class="fab fa-js text-3xl"></i><span>JavaScript</span></div>
+                    <div class="carousel-item"><i class="fab fa-docker text-3xl"></i><span>Docker</span></div>
+                    <div class="carousel-item"><i class="fab fa-git-alt text-3xl"></i><span>Git</span></div>
+                    <div class="carousel-item"><i class="fab fa-aws text-3xl"></i><span>AWS</span></div>
+                    <div class="carousel-item"><i class="fab fa-node-js text-3xl"></i><span>Node.js</span></div>
+                    <div class="carousel-item"><i class="fab fa-linux text-3xl"></i><span>Linux</span></div>
+                    <div class="carousel-item"><i class="fas fa-database text-3xl"></i><span>SQL</span></div>
+                    <div class="carousel-item"><i class="fas fa-brain text-3xl"></i><span>TensorFlow</span></div>
+                </div>
+            </div>
+
+            <!-- Row 2 — Right (reverse direction) -->
+            <div class="carousel-row">
+                <div class="logo-track small reverse flex items-end gap-14 whitespace-nowrap">
+                    <!-- Set 1 -->
+                    <div class="carousel-item"><i class="fas fa-cube text-3xl"></i><span>PyTorch</span></div>
+                    <div class="carousel-item"><i class="fas fa-server text-3xl"></i><span>FastAPI</span></div>
+                    <div class="carousel-item"><i class="fas fa-project-diagram text-3xl"></i><span>LangChain</span>
+                    </div>
+                    <div class="carousel-item"><i class="fas fa-search text-3xl"></i><span>Pinecone</span></div>
+                    <div class="carousel-item"><i class="fab fa-github text-3xl"></i><span>GitHub</span></div>
+                    <div class="carousel-item"><i class="fas fa-chart-bar text-3xl"></i><span>Pandas</span></div>
+                    <div class="carousel-item"><i class="fas fa-microchip text-3xl"></i><span>CUDA</span></div>
+                    <div class="carousel-item"><i class="fas fa-code text-3xl"></i><span>Next.js</span></div>
+                    <div class="carousel-item"><i class="fas fa-leaf text-3xl"></i><span>MongoDB</span></div>
+                    <div class="carousel-item"><i class="fas fa-robot text-3xl"></i><span>CrewAI</span></div>
+                    <!-- Set 2 (duplicate for seamless loop) -->
+                    <div class="carousel-item"><i class="fas fa-cube text-3xl"></i><span>PyTorch</span></div>
+                    <div class="carousel-item"><i class="fas fa-server text-3xl"></i><span>FastAPI</span></div>
+                    <div class="carousel-item"><i class="fas fa-project-diagram text-3xl"></i><span>LangChain</span>
+                    </div>
+                    <div class="carousel-item"><i class="fas fa-search text-3xl"></i><span>Pinecone</span></div>
+                    <div class="carousel-item"><i class="fab fa-github text-3xl"></i><span>GitHub</span></div>
+                    <div class="carousel-item"><i class="fas fa-chart-bar text-3xl"></i><span>Pandas</span></div>
+                    <div class="carousel-item"><i class="fas fa-microchip text-3xl"></i><span>CUDA</span></div>
+                    <div class="carousel-item"><i class="fas fa-code text-3xl"></i><span>Next.js</span></div>
+                    <div class="carousel-item"><i class="fas fa-leaf text-3xl"></i><span>MongoDB</span></div>
+                    <div class="carousel-item"><i class="fas fa-robot text-3xl"></i><span>CrewAI</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="contact" class="py-24 px-6 max-w-4xl mx-auto relative z-10 text-center">
+        <h2 class="text-4xl font-bold mb-6 fade-up text-gold-gradient">Let's Connect & Collaborate</h2>
+        <p class="text-gray-500 mb-12 fade-up">Open to new challenging projects, speaking engagements, and full-time
+            opportunities.</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
+            <a href="https://linkedin.com/in/krissshhhnah" target="_blank"
+                class="p-4 bg-[#0a0a0a] border border-gray-900 hover:border-[#D4AF37] rounded-xl transition hover:-translate-y-1 group">
+                <i class="fab fa-linkedin text-2xl text-gray-600 group-hover:text-white mb-3 transition"></i>
+                <p class="text-xs text-gray-500 uppercase tracking-wider">Linkedin</p>
+            </a>
+            <a href="https://github.com/krissshhhnah" target="_blank"
+                class="p-4 bg-[#0a0a0a] border border-gray-900 hover:border-[#D4AF37] rounded-xl transition hover:-translate-y-1 group">
+                <i class="fab fa-github text-2xl text-gray-600 group-hover:text-white mb-3 transition"></i>
+                <p class="text-xs text-gray-500 uppercase tracking-wider">GitHub</p>
+            </a>
+            <a href="mailto:krishnenduprasanthofficial@gmail.com"
+                class="p-4 bg-[#0a0a0a] border border-gray-900 hover:border-[#D4AF37] rounded-xl transition hover:-translate-y-1 group">
+                <i class="fas fa-envelope text-2xl text-gray-600 group-hover:text-white mb-3 transition"></i>
+                <p class="text-xs text-gray-500 uppercase tracking-wider">Email</p>
+            </a>
+            <a href="tel:+919605449546"
+                class="p-4 bg-[#0a0a0a] border border-gray-900 hover:border-[#D4AF37] rounded-xl transition hover:-translate-y-1 group">
+                <i class="fas fa-phone-alt text-2xl text-gray-600 group-hover:text-white mb-3 transition"></i>
+                <p class="text-xs text-gray-500 uppercase tracking-wider">Contact</p>
+            </a>
+        </div>
+        <div class="mt-12 fade-up">
+            <a href="img\KrishnenduResume.pdf" download
+                class="gold-btn px-8 py-3 rounded-full font-medium text-sm tracking-wide inline-flex items-center gap-2">
+                <i class="fas fa-download"></i> Check Out My Resume
+            </a>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-700 text-sm border-t border-gray-900/50 relative z-10">
+        <p class="text-lg font-display italic text-gray-600 mb-2">"One commit away from salvation"</p>
+        <div
+            class="w-10 h-10 border border-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-4 text-[#D4AF37] font-bold">
+            KP</div>
+        <p class="font-mono text-xs mb-2">© 2025 Krishnendu Prasanth.</p>
+        <p class="text-[10px] uppercase tracking-widest text-gray-800">Designed with a premium eye</p>
+    </footer>
+
+    <!-- KAI PILL LAUNCHER -->
+    <div id="agent-launcher" title="Chat with Kai">
+        <span id="launcher-label">Ask Kai</span>
+        <div id="launcher-pill">
+            <div class="kai-bar"></div>
+            <div class="kai-bar"></div>
+            <div class="kai-bar"></div>
+            <div class="kai-bar"></div>
+            <div class="kai-bar"></div>
+        </div>
+    </div>
+
+    <!-- AGENT DIALOG -->
+    <div id="agent-dialog">
+        <div class="agent-header">
+            <div class="flex items-center gap-2.5">
+                <div class="agent-header-dot"></div>
+                <div>
+                    <p class="text-white text-sm font-bold font-display leading-none">Kai</p>
+                    <p class="text-[10px] text-gray-600 uppercase tracking-widest mt-0.5">Krish's AI Twin</p>
+                </div>
+            </div>
+            <button onclick="toggleAgent()"
+                class="w-7 h-7 rounded-lg flex items-center justify-center text-gray-600 hover:text-white hover:bg-white/5 transition text-xs">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="agent-messages" class="agent-body text-gray-300 space-y-3">
+            <div
+                class="bg-white/[0.03] p-3 rounded-xl rounded-tl-none border border-white/[0.06] text-sm text-gray-400 leading-relaxed">
+                Hey! I'm Kai — Krish's AI. Ask me about his projects, skills, or experience.
+            </div>
+        </div>
+        <div class="agent-input-area">
+            <input type="text" id="agent-input" placeholder="Ask anything..."
+                class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#D4AF37]/50 focus:bg-white/[0.06] outline-none pr-10 transition"
+                onkeypress="handleAgentInput(event)">
+            <button onclick="toggleVoiceMode()" id="mic-btn"
+                class="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-[#D4AF37] transition text-xs">
+                <i class="fas fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- PROJECT MODAL -->
+    <div id="project-modal" class="project-modal" onclick="closeProjectModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-start border-b border-gray-800 pb-4 mb-4">
+                <h3 id="modal-title" class="text-3xl font-bold text-gold-gradient font-display">Project Title</h3>
+                <button onclick="closeProjectModal()" class="text-gray-500 hover:text-[#D4AF37] transition text-xl"><i
+                        class="fas fa-times"></i></button>
+            </div>
+
+            <p id="modal-description" class="text-gray-400 mb-6 leading-relaxed">Detailed description will go here.</p>
+
+            <div class="mb-6">
+                <h4 class="text-sm uppercase tracking-widest text-[#D4AF37] mb-2">Key Tools & Technologies</h4>
+                <div id="modal-tools" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- ELI5 Button -->
+            <button onclick="triggerELI5()"
+                class="w-full mb-4 py-3 rounded-lg border border-gray-700 text-gray-300 hover:border-[#D4AF37] hover:text-[#D4AF37] transition text-sm font-bold flex items-center justify-center gap-2 group">
+                <i class="fas fa-child group-hover:animate-bounce"></i> Explain Like I'm 5
+            </button>
+
+            <!-- ELI5 Box -->
+            <div id="eli5-container" class="eli5-box">
+                <h4 class="text-[#D4AF37] font-bold mb-2 text-sm uppercase">AI Explanation (5yo Edition):</h4>
+                <p id="eli5-text" class="text-gray-300 text-sm leading-relaxed italic">Thinking...</p>
+            </div>
+
+            <a id="modal-view-link" href="#" target="_blank"
+                class="gold-btn px-6 py-2 rounded-full font-medium text-sm tracking-wide mt-4 inline-block text-center w-full">
+                View Live Project <i class="fas fa-external-link-alt ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. KAI LAUNCHER INTERACTION ---
+        let isListening = false;
+
+        // --- 2. AGENT INTERACTION LOGIC ---
+        const orbBtn = document.getElementById('agent-launcher');
+        const agentDialog = document.getElementById('agent-dialog');
+        const agentInput = document.getElementById('agent-input');
+        const agentMessages = document.getElementById('agent-messages');
+        let isAgentOpen = false;
+
+        orbBtn.addEventListener('click', toggleAgent);
+
+        function toggleAgent() {
+            isAgentOpen = !isAgentOpen;
+            if (isAgentOpen) {
+                agentDialog.classList.add('open');
+                orbBtn.classList.add('active');
+            } else {
+                agentDialog.classList.remove('open');
+                orbBtn.classList.remove('active');
+            }
+        }
+
+        function handleAgentInput(e) {
+            if (e.key === 'Enter') {
+                const text = agentInput.value.trim();
+                if (text) sendMessageToAgent(text);
+            }
+        }
+
+        function toggleVoiceMode() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Browser speech not supported. Backend LiveKit required for full voice.");
+                return;
+            }
+            const recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.onstart = () => {
+                isListening = true;
+                document.getElementById('mic-btn').style.color = '#ff4444';
+                document.getElementById('agent-launcher').classList.add('listening');
+            };
+            recognition.onend = () => {
+                isListening = false;
+                document.getElementById('mic-btn').style.color = '';
+                document.getElementById('agent-launcher').classList.remove('listening');
+            };
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                agentInput.value = transcript;
+                sendMessageToAgent(transcript);
+            };
+            recognition.start();
+        }
+
+        async function sendMessageToAgent(msg) {
+            const userDiv = document.createElement('div');
+            userDiv.className = 'bg-[#D4AF37] text-black p-3 rounded-lg rounded-tr-none ml-auto max-w-[85%]';
+            userDiv.innerText = msg;
+            agentMessages.appendChild(userDiv);
+            agentInput.value = '';
+            agentMessages.scrollTop = agentMessages.scrollHeight;
+
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'bg-gray-900/50 border border-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%] text-gray-400 typing-indicator';
+            loadingDiv.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+            agentMessages.appendChild(loadingDiv);
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/agent', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: msg })
+                });
+                const data = await res.json();
+
+                agentMessages.removeChild(loadingDiv);
+                const botDiv = document.createElement('div');
+                botDiv.className = 'bg-gray-900/50 border border-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%]';
+                botDiv.innerText = data.response;
+                agentMessages.appendChild(botDiv);
+
+                const utterance = new SpeechSynthesisUtterance(data.response);
+                const voices = window.speechSynthesis.getVoices();
+                utterance.voice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+                window.speechSynthesis.speak(utterance);
+
+            } catch (e) {
+                console.error(e);
+                loadingDiv.innerText = "Error connecting to Agent brain.";
+                loadingDiv.classList.remove('typing-indicator');
+            }
+            agentMessages.scrollTop = agentMessages.scrollHeight;
+        }
+
+        // --- 3. PROJECT MODAL & ELI5 LOGIC ---
+        const projectData = {
+            1: {
+                title: "Krishna – Voice Agent",
+                description: "Developed an intelligent AI-powered voice assistant capable of understanding natural language commands, performing real-time speech-to-text conversion, sending emails autonomously, fetching live weather updates, and retrieving contextual information from the web using NLP-driven intent recognition.",
+                tools: ["Speech-to-Text", "Natural Language Processing", "Voice Automation", "API Integration"],
+                link: "https://github.com/krissshhhnah/Krishna---Voice-Assistant"
+            },
+            2: {
+                title: "Dynamic RAG for PDF Documents",
+                description: "Designed and implemented a dynamic Retrieval-Augmented Generation (RAG) pipeline that ingests and processes PDF documents, performs semantic chunking, vector embedding, and similarity-based retrieval to generate accurate, context-aware responses using large language models.",
+                tools: ["RAG", "LLMs", "Vector Databases", "Semantic Search", "PDF Parsing"],
+                link: "https://github.com/krissshhhnah/Dynamic-RAG-for-PDF-Documents"
+            },
+            3: {
+                title: "SentinelAI - Engineering Review Orchestrator",
+                description: "Built an AI-driven internal engineering review orchestrator that automatically analyzes pull request comments, technical documentation, and reported bugs to provide structured insights, prioritize issues, and enhance software development and code review workflows.",
+                tools: ["LLMs", "Workflow Automation", "Code Intelligence", "Developer Tools"],
+                link: "https://github.com/krissshhhnah/SentinelAI-Internal-Engineering-Review-Orchestrator-"
+            },
+            4: {
+                title: "AI Optimized Supply Chain Management System",
+                description: "Developed an AI-enabled supply chain management system that leverages machine learning models to optimize procurement planning, demand forecasting, logistics coordination, and inventory management for improved operational efficiency.",
+                tools: ["Machine Learning", "Predictive Analytics", "Supply Chain Optimization", "Automation"],
+                link: "https://github.com/krissshhhnah/AI-Driven-Supply-Chain-Management"
+            },
+            5: {
+                title: "AI Python Code Reviewer",
+                description: "Created an AI-based Python code review system that evaluates code correctness, logical relevance, and problem-solution alignment by comparing source code against structured problem statements using intelligent code analysis techniques.",
+                tools: ["Python", "Code Analysis", "LLMs", "AI Evaluation"],
+                link: "https://github.com/krissshhhnah/AI-Code-Reviewer"
+            },
+            6: {
+                title: "AI Football Score Prediction",
+                description: "Built a machine learning-based football match score prediction system that analyzes historical match data, team performance metrics, and statistical patterns to generate probabilistic score predictions and outcome insights.",
+                tools: ["Machine Learning", "Time Series Analysis", "Sports Analytics", "Predictive Modeling"],
+                link: "https://github.com/krissshhhnah/AI-Football-Score-Prediction"
+            }
+        };
+
+        let currentProjectId = null;
+
+        function openProjectModal(id) {
+            currentProjectId = id;
+            const data = projectData[id];
+            if (!data) return;
+
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-description').textContent = data.description;
+            document.getElementById('modal-view-link').href = data.link;
+            document.getElementById('eli5-container').classList.remove('visible');
+            document.getElementById('eli5-text').innerText = "Thinking...";
+
+            const toolsContainer = document.getElementById('modal-tools');
+            toolsContainer.innerHTML = data.tools.map(tool =>
+                `<span class="text-xs font-mono border border-gray-800 px-3 py-1 rounded text-white bg-[#111]">${tool}</span>`
+            ).join('');
+
+            document.getElementById('project-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal(event) {
+            if (event && event.target !== document.getElementById('project-modal')) return;
+            document.getElementById('project-modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        async function triggerELI5() {
+            const container = document.getElementById('eli5-container');
+            const textEl = document.getElementById('eli5-text');
+            container.classList.add('visible');
+            textEl.innerText = "Asking the AI teacher...";
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/eli5', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ description: projectData[currentProjectId].description })
+                });
+                const data = await res.json();
+                textEl.innerText = data.explanation;
+            } catch (e) {
+                textEl.innerText = "Imagine a smart robot helping you with your homework!";
+            }
+        }
+
+        // --- 4. UTILS ---
+        const ambientGlow = document.getElementById('ambient-glow');
+        document.addEventListener('mousemove', (e) => {
+            ambientGlow.style.left = `${e.clientX}px`;
+            ambientGlow.style.top = `${e.clientY}px`;
+        });
+
+        const typewriterElement = document.getElementById('typewriter');
+        const text = "Krishnendu Prasanth.";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                typewriterElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 150);
+            }
+        }
+        setTimeout(typeWriter, 500);
+
+        const cards = document.querySelectorAll('.project-card, .skill-card');
+        document.querySelectorAll('section').forEach(sec => {
+            sec.onmousemove = e => {
+                for (const card of cards) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const angle = Math.atan2(y - rect.height / 2, x - rect.width / 2) * (180 / Math.PI) + 90;
+                    card.style.setProperty("--mouse-x", `${x}px`);
+                    card.style.setProperty("--mouse-y", `${y}px`);
+                    card.style.setProperty("--angle", `${angle}deg`);
+                };
+            }
+        });
+
+        const nav = document.getElementById('side-nav');
+        const heroSection = document.getElementById('hero');
+        window.addEventListener('scroll', () => {
+            const heroBottom = heroSection.getBoundingClientRect().bottom;
+            if (heroBottom < 100) nav.classList.add('active');
+            else nav.classList.remove('active');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        const viewMoreBtn = document.getElementById('view-more-btn');
+        const moreProjectsContainer = document.getElementById('more-projects-container');
+        viewMoreBtn.addEventListener('click', () => {
+            const isHidden = moreProjectsContainer.classList.contains('hidden');
+            if (isHidden) {
+                moreProjectsContainer.classList.remove('hidden');
+                setTimeout(() => {
+                    document.querySelectorAll('#more-projects-container .project-card').forEach(el => el.classList.add('visible'));
+                }, 10);
+                viewMoreBtn.innerHTML = 'View Less Projects <i class="fas fa-arrow-up ml-2"></i>';
+            } else {
+                moreProjectsContainer.classList.add('hidden');
+                viewMoreBtn.innerHTML = 'View More Projects <i class="fas fa-arrow-down ml-2"></i>';
+                document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        // --- SKILL CARD INTERACTIONS ---
+        const skillsSec = document.getElementById('skills');
+        const skillCards = document.querySelectorAll('.skill-card');
+
+        skillsSec.addEventListener('mousemove', (e) => {
+            skillCards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', `${x}%`);
+                card.style.setProperty('--mouse-y', `${y}%`);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

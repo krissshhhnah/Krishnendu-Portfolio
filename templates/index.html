@@ -1768,13 +1768,14 @@
             agentMessages.appendChild(loadingDiv);
 
             try {
-                fetch("/agent", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({ message: userInput })
-                })
+                const res = await fetch("/agent", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ message: userInput })
+                });
+                
                 const data = await res.json();
 
                 agentMessages.removeChild(loadingDiv);
@@ -1969,5 +1970,6 @@
 </body>
 
 </html>
+
 
 

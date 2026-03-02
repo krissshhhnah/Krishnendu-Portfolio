@@ -1768,9 +1768,13 @@
             agentMessages.appendChild(loadingDiv);
 
             try {
-                const res = await fetch('http://127.0.0.1:5000/agent', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: msg })
-                });
+                fetch("/agent", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ message: userInput })
+                })
                 const data = await res.json();
 
                 agentMessages.removeChild(loadingDiv);
@@ -1867,10 +1871,13 @@
             textEl.innerText = "Asking the AI teacher...";
 
             try {
-                const res = await fetch('http://127.0.0.1:5000/eli5', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ description: projectData[currentProjectId].description })
-                });
+                const res = await fetch('/eli5', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    description: projectData[currentProjectId].description
+                })
+            });
                 const data = await res.json();
                 textEl.innerText = data.explanation;
             } catch (e) {
@@ -1962,4 +1969,5 @@
 </body>
 
 </html>
+
 

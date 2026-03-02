@@ -6,6 +6,7 @@ from flask_cors import CORS
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from dotenv import load_dotenv
+from flask import render_template
 
 load_dotenv()
 
@@ -113,6 +114,10 @@ def call_llm(prompt, system_prompt):
 # ROUTES
 # -------------------------------------------------
 @app.route("/", methods=["GET"])
+def home():
+    return render_template("index.html")
+
+@app.route("/health")
 def health():
     return jsonify({"status": "AI server online"})
 
@@ -145,4 +150,5 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     print(f"🔥 Elite AI Server running on port {port}")
     app.run(host="0.0.0.0", port=10000)
+
 

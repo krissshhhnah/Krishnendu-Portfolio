@@ -1792,8 +1792,23 @@
             agentMessages.appendChild(botDiv);
         
             const utterance = new SpeechSynthesisUtterance(data.response);
-            const voices = window.speechSynthesis.getVoices();
-            utterance.voice = voices.find(v => v.name.includes('Google US English')) || voices[0];
+
+            function setVoiceAndSpeak() {
+                const voices = speechSynthesis.getVoices();
+                const selectedVoice = voices.find(v => v.name === "Microsoft Heera") || voices[0];
+            
+                utterance.voice = selectedVoice;
+                utterance.rate = 0.95;   // optional
+                utterance.pitch = 1;     // optional
+            
+                speechSynthesis.speak(utterance);
+            }
+            
+            if (speechSynthesis.getVoices().length === 0) {
+                speechSynthesis.onvoiceschanged = setVoice;
+            } else {
+                setVoice();
+            }
         
             window.speechSynthesis.speak(utterance);
         
@@ -1979,6 +1994,7 @@
 </body>
 
 </html>
+
 
 
 

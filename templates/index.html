@@ -1768,6 +1768,11 @@
             agentMessages.appendChild(loadingDiv);
 
             try {
+
+                const userInput = document.getElementById("agentInput").value;
+            
+                if (!userInput.trim()) return;
+            
                 const res = await fetch("/agent", {
                     method: "POST",
                     headers: {
@@ -1775,25 +1780,29 @@
                     },
                     body: JSON.stringify({ message: userInput })
                 });
-                
+            
                 const data = await res.json();
-
+            
                 agentMessages.removeChild(loadingDiv);
+            
                 const botDiv = document.createElement('div');
                 botDiv.className = 'bg-gray-900/50 border border-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%]';
                 botDiv.innerText = data.response;
+            
                 agentMessages.appendChild(botDiv);
-
+            
                 const utterance = new SpeechSynthesisUtterance(data.response);
                 const voices = window.speechSynthesis.getVoices();
-                utterance.voice = voices.find(voice => voice.name.includes('Google US English')) || voices[0];
+                utterance.voice = voices.find(v => v.name.includes('Google US English')) || voices[0];
+            
                 window.speechSynthesis.speak(utterance);
-
+            
             } catch (e) {
                 console.error(e);
                 loadingDiv.innerText = "Error connecting to Agent brain.";
                 loadingDiv.classList.remove('typing-indicator');
             }
+            
             agentMessages.scrollTop = agentMessages.scrollHeight;
         }
 
@@ -1970,6 +1979,7 @@
 </body>
 
 </html>
+
 
 
 

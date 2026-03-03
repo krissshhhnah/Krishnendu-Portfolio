@@ -1769,37 +1769,39 @@
 
             try {
 
-                const userInput = document.getElementById("agentInput").value;
-            
-                const res = await fetch("/agent", {
+            const res = await fetch("/agent", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ message: msg })
-                });
-            
-                const data = await res.json();
-            
-                agentMessages.removeChild(loadingDiv);
-            
-                const botDiv = document.createElement('div');
-                botDiv.className = 'bg-gray-900/50 border border-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%]';
-                botDiv.innerText = data.response;
-            
-                agentMessages.appendChild(botDiv);
-            
-                const utterance = new SpeechSynthesisUtterance(data.response);
-                const voices = window.speechSynthesis.getVoices();
-                utterance.voice = voices.find(v => v.name.includes('Google US English')) || voices[0];
-            
-                window.speechSynthesis.speak(utterance);
-            
-            } catch (e) {
-                console.error(e);
-                loadingDiv.innerText = "Error connecting to Agent brain.";
-                loadingDiv.classList.remove('typing-indicator');
+            });
+        
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
             }
+        
+            const data = await res.json();
+        
+            agentMessages.removeChild(loadingDiv);
+        
+            const botDiv = document.createElement('div');
+            botDiv.className = 'bg-gray-900/50 border border-gray-800 p-3 rounded-lg rounded-tl-none max-w-[85%]';
+            botDiv.innerText = data.response;
+        
+            agentMessages.appendChild(botDiv);
+        
+            const utterance = new SpeechSynthesisUtterance(data.response);
+            const voices = window.speechSynthesis.getVoices();
+            utterance.voice = voices.find(v => v.name.includes('Google US English')) || voices[0];
+        
+            window.speechSynthesis.speak(utterance);
+        
+        } catch (e) {
+            console.error("FULL ERROR:", e);
+            loadingDiv.innerText = "Error connecting to Agent brain.";
+            loadingDiv.classList.remove('typing-indicator');
+        }
             
             agentMessages.scrollTop = agentMessages.scrollHeight;
         }
@@ -1977,6 +1979,7 @@
 </body>
 
 </html>
+
 
 
 
